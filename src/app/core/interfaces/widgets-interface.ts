@@ -234,8 +234,11 @@ export interface IWidgetSvcConfig {
  /** Used by IFrame widget: URL lo load in the iframe */
   widgetUrl?: string;
 
-  /** Use by racetimer widget */
+  /** Use by racetimer and racertimer widget */
   timerLength?: number;
+
+  /** Use by racertimer widget */
+  nextDashboard?: number;
 }
 
 /**
