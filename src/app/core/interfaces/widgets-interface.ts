@@ -176,6 +176,12 @@ export interface IWidgetSvcConfig {
   waypointEnable?: boolean;
   /** Used by wind Widget: enable/disable COG UI feature */
   courseOverGroundEnable?: boolean;
+  /** Used by wind Widget: enable/disable current UI feature */
+  driftEnable?: boolean;
+  /** Used by wind Widget: enable/disable Apparent Wind Speed UI feature */
+  awsEnable?: boolean;
+  /** Used by wind Widget: enable/disable True Wind Speed UI feature */
+  twsEnable?: boolean;
   /** Used by wind Widget: enable/disable sailSetup UI feature */
   sailSetupEnable?: boolean;
 
@@ -233,6 +239,8 @@ export interface IWidgetSvcConfig {
 
  /** Used by IFrame widget: URL lo load in the iframe */
   widgetUrl?: string;
+  /** Used by IFrame widget: allow input on iframe or not */
+  allowInput?: boolean;
 
   /** Use by racetimer and racertimer widget */
   timerLength?: number;

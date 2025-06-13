@@ -36,6 +36,14 @@
               <input type="url" matInput placeholder="Enter URL to page/resource" name="widgetUrl" formControlName="widgetUrl">
             </mat-form-field>
 
+            <mat-checkbox class="options-grid-span2" *ngIf="(widgetConfig.allowInput !== undefined)"
+              name="allowInput"
+              formControlName="allowInput">
+              Allow pointer events on embedded content. WARNING: this may prevent swipe
+              gestures over the Embed widget or keyboard events, while the focus is in
+              the embed, from triggering normal KIP interactions.
+            </mat-checkbox>
+
             <mat-form-field class="options-grid-span2" *ngIf="(widgetConfig.displayName !== undefined)">
               <mat-label>Widget Label</mat-label>
               <input matInput placeholder="Enter a label to display" name="displayName" formControlName="displayName">
@@ -111,11 +119,21 @@
               <input type="number" min="1" max="90" matInput placeholder="Select or enter duration..." name="windSectorWindowSeconds"  formControlName="windSectorWindowSeconds">
             </mat-form-field>
 
+            <mat-checkbox class="options-grid-span2" *ngIf="(widgetConfig.awsEnable !== undefined)" name="awsEnable" formControlName="awsEnable" (change)="setPaths()">
+              Show Apparent Wind Speed Value
+            </mat-checkbox>
+            <mat-checkbox class="options-grid-span2" *ngIf="(widgetConfig.twsEnable !== undefined)" name="twsEnable" formControlName="twsEnable" (change)="setPaths()">
+              Show True Wind Speed Value
+            </mat-checkbox>
+
             <mat-checkbox class="options-grid-span2" *ngIf="(widgetConfig.courseOverGroundEnable !== undefined)" name="courseOverGroundEnable" formControlName="courseOverGroundEnable" (change)="setPaths()">
               Show Course Over Ground
             </mat-checkbox>
-            <mat-checkbox class="options-grid-span2" *ngIf="(widgetConfig.waypointEnable !== undefined)" name="waypointEnable" formControlName="waypointEnable">
+            <mat-checkbox class="options-grid-span2" *ngIf="(widgetConfig.waypointEnable !== undefined)" name="waypointEnable" formControlName="waypointEnable" (change)="setPaths()">
               Show Next Waypoint
+            </mat-checkbox>
+            <mat-checkbox class="options-grid-span2" *ngIf="(widgetConfig.driftEnable !== undefined)" name="driftEnable" formControlName="driftEnable" (change)="setPaths()">
+              Show Drift
             </mat-checkbox>
 
             <mat-form-field *ngIf="(widgetConfig.minValue !== undefined) && !formMaster.get('displayScale')">
@@ -336,14 +354,16 @@
             [enableTimeout]="enableTimeoutToControl"
             [dataTimeout]="dataTimeoutToControl"
             [filterSelfPaths]="filterSelfPathsToControl"
-            [addPathEvent]="addPathEvent">
+            [addPathEvent]="addPathEvent"
+            [delPathEvent]="delPathEvent"
+            [updatePathEvent]="updatePathEvent">
           </paths-options>
         </div>
       </mat-tab>
 <!-- Gauge stuff -->
         @if (widgetConfig.gauge?.type == "steel") {
         <mat-tab label="Settings" formGroupName="gauge">
-          <div class="widget-options-grid tab-content">
+          <div class="display-content tab-content">
             <mat-form-field class="options-grid-span2">
               <mat-label>Gauge Type</mat-label>
               <mat-select
